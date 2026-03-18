@@ -1,0 +1,48 @@
+plugins {
+  id 'scala'
+  id 'application'
+}
+
+repositories { mavenCentral() }
+
+ext {
+    scalaVersion =  '2.13.18'
+    scalaBinaryVersion = scalaVersion.tokenize('.').take(2).join('.')
+    sparkVersion = '4.1.1'
+}
+
+dependencies {
+  implementation "org.scala-lang:scala-library:$scalaBinaryVersion"
+  implementation "org.apache.spark:spark-core_$scalaBinaryVersion:$sparkVersion"
+  implementation "org.apache.spark:spark-sql_$scalaBinaryVersion:$sparkVersion"
+}
+
+sourceSets {
+  main {
+    scala {
+      srcDirs = ["src/main/scala"]
+    }
+    resources {
+      srcDirs = ["src/main/resources"]
+    }
+  }
+}
+
+application {
+  mainClass = "example.WordProcessing"
+}
+
+tasks.withType(ScalaCompile).configureEach {
+  scalaCompileOptions.additionalParameters = ["-deprecation", "-feature"]
+}
+
+jar {
+  manifest {
+    attributes 'Main-Class': application.mainClass.get()
+  }
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_17
+  targetCompatibility = JavaVersion.VERSION_17
+}
