@@ -1,4 +1,6 @@
 
+package example.Helpers
+
 object Luhn {
   def check(number: String): Boolean = {
     val digits = number.filter(_.isDigit).map(_.asDigit)

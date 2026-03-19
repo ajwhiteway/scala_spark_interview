@@ -1,6 +1,15 @@
 # Build
 build/*
+generate.py
+cs
 
 # Environment
 .gradle/*
 .DS_Store
+
+# Scala
+*.json
+*.class
+*.tasty
+*.bin
+
